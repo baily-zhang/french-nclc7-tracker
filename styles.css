@@ -267,6 +267,50 @@ textarea:focus {
   gap: 8px;
 }
 
+.current-plan-card {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border: 1px solid #dfd1b9;
+  border-left: 6px solid var(--red);
+  border-radius: 8px;
+  background: #fff6e3;
+}
+
+.current-plan-card h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.18rem;
+  line-height: 1.16;
+}
+
+.current-plan-card p {
+  color: var(--muted);
+  line-height: 1.48;
+}
+
+.plan-tags,
+.check-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plan-tags span,
+.check-list span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 9px;
+  border: 1px solid #d9c7a8;
+  border-radius: 999px;
+  color: var(--coal);
+  background: #fffdf8;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
 .task-row,
 .milestone-row {
   display: grid;
