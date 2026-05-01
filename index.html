@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>French NCLC 7 Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">TEF Canada / NCLC 7</p>
+        <h1>French 180-Day Control Room</h1>
+      </div>
+      <div class="top-actions" aria-label="Data actions">
+        <button class="icon-button" id="exportButton" type="button" title="导出进度 JSON">
+          <span aria-hidden="true">⇩</span>
+          导出
+        </button>
+        <button class="icon-button" id="importButton" type="button" title="导入进度 JSON">
+          <span aria-hidden="true">⇧</span>
+          导入
+        </button>
+        <button class="icon-button" id="printButton" type="button" title="打印或保存报告">
+          <span aria-hidden="true">⎙</span>
+          打印
+        </button>
+        <input id="importFile" type="file" accept="application/json" hidden />
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero-band" aria-label="Current progress">
+        <div class="date-controls">
+          <label>
+            训练开始日
+            <input id="startDateInput" type="date" />
+          </label>
+          <label>
+            当前记录日
+            <input id="selectedDateInput" type="date" />
+          </label>
+        </div>
+        <div class="kpi-grid">
+          <article class="metric">
+            <span>当前天数</span>
+            <strong id="dayNumber">Day 1</strong>
+            <small id="phaseName">A0 → A1</small>
+          </article>
+          <article class="metric">
+            <span>总进度</span>
+            <strong id="overallProgress">0%</strong>
+            <small>按 180 天计划</small>
+          </article>
+          <article class="metric">
+            <span>连续完成</span>
+            <strong id="streakCount">0 天</strong>
+            <small>完成 6+ 项算达标</small>
+          </article>
+          <article class="metric">
+            <span>累计学习</span>
+            <strong id="totalHours">0 h</strong>
+            <small>来自每日分钟记录</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="column primary-column">
+          <section class="panel" aria-labelledby="todayTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Today</p>
+                <h2 id="todayTitle">每日执行</h2>
+              </div>
+              <select id="dayStatus" aria-label="今日状态">
+                <option value="planned">计划中</option>
+                <option value="solid">已完成</option>
+                <option value="weak">弱项日</option>
+                <option value="mock">模考日</option>
+                <option value="rest">恢复日</option>
+              </select>
+            </div>
+            <div class="task-list" id="taskList"></div>
+          </section>
+
+          <section class="panel" aria-labelledby="skillsTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Minutes</p>
+                <h2 id="skillsTitle">四项与基础能力</h2>
+              </div>
+              <button id="fillDefaultButton" class="quiet-button" type="button">填入全日制默认值</button>
+            </div>
+            <div class="skill-grid" id="skillGrid"></div>
+          </section>
+
+          <section class="panel" aria-labelledby="notesTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Journal</p>
+                <h2 id="notesTitle">每日笔记</h2>
+              </div>
+              <button id="copyBriefButton" class="quiet-button" type="button">复制今日简报</button>
+            </div>
+            <textarea id="dailyNotes" rows="9" placeholder="记录今天学了什么、错在哪里、明天先改什么。"></textarea>
+            <div class="note-fields">
+              <label>
+                今日最大错误
+                <input id="mainError" type="text" placeholder="例如：passe composé 助动词混乱" />
+              </label>
+              <label>
+                明日第一优先级
+                <input id="nextPriority" type="text" placeholder="例如：Section B 说服结构" />
+              </label>
+            </div>
+          </section>
+        </div>
+
+        <aside class="column side-column">
+          <section class="panel" aria-labelledby="tefTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">TEF Signals</p>
+                <h2 id="tefTitle">模考状态</h2>
+              </div>
+            </div>
+            <div class="tef-grid">
+              <label>听力正确率<input id="tefListening" type="text" placeholder="32/40" /></label>
+              <label>阅读正确率<input id="tefReading" type="text" placeholder="31/40" /></label>
+              <label>写作状态<input id="tefWriting" type="text" placeholder="A+B 60min 完成" /></label>
+              <label>口语状态<input id="tefSpeaking" type="text" placeholder="B 题 10min" /></label>
+            </div>
+          </section>
+
+          <section class="panel" aria-labelledby="monthTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Roadmap</p>
+                <h2 id="monthTitle">六个月路线</h2>
+              </div>
+            </div>
+            <div id="phaseList" class="phase-list"></div>
+          </section>
+
+          <section class="panel" aria-labelledby="milestoneTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Gate Checks</p>
+                <h2 id="milestoneTitle">阶段门槛</h2>
+              </div>
+            </div>
+            <div id="milestoneList" class="milestone-list"></div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="panel heatmap-panel" aria-labelledby="heatmapTitle">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">180 Days</p>
+            <h2 id="heatmapTitle">训练热力图</h2>
+          </div>
+          <button id="resetDayButton" class="quiet-button danger" type="button">清空当前日</button>
+        </div>
+        <div id="heatmap" class="heatmap" aria-label="180-day completion heatmap"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span id="saveState">已保存</span>
+      <button id="resetAllButton" type="button">重置全部本地数据</button>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
