@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>French NCLC 7 Tracker</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20260501-2" />
   </head>
   <body>
     <header class="topbar">
@@ -67,6 +67,16 @@
 
       <section class="workspace">
         <div class="column primary-column">
+          <section class="panel current-week-panel" aria-labelledby="currentWeekTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Current Week</p>
+                <h2 id="currentWeekTitle">当前周计划</h2>
+              </div>
+            </div>
+            <article class="current-plan-card" id="currentPlanCard"></article>
+          </section>
+
           <section class="panel" aria-labelledby="todayTitle">
             <div class="panel-heading">
               <div>
@@ -81,7 +91,6 @@
                 <option value="rest">恢复日</option>
               </select>
             </div>
-            <article class="current-plan-card" id="currentPlanCard"></article>
             <div class="task-list" id="taskList"></div>
           </section>
 
@@ -173,6 +182,6 @@
       <button id="resetAllButton" type="button">重置全部本地数据</button>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=20260501-2"></script>
   </body>
 </html>

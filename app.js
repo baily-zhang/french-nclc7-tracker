@@ -564,7 +564,7 @@ function render() {
   els.startDateInput.value = state.startDate;
   els.selectedDateInput.value = state.selectedDate;
   els.dayNumber.textContent = `Day ${dayNumber}`;
-  els.phaseName.textContent = phase.title;
+  els.phaseName.textContent = `${phase.title} · ${plan.label}`;
   els.overallProgress.textContent = `${Math.round((dayNumber / TOTAL_DAYS) * 100)}%`;
   els.streakCount.textContent = `${streakCount()} 天`;
   els.totalHours.textContent = `${(totalMinutes() / 60).toFixed(1)} h`;
